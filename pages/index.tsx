@@ -177,7 +177,11 @@ export default function Home(props: Props) {
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
       />
-      <iframe ref={iframeRef} className="hidden" src="https://katla.id/sync" />
+      <iframe
+        ref={iframeRef}
+        className="hidden"
+        src="https://katla-git-sync-state-pveyes.vercel.app/sync"
+      />
     </Container>
   );
 }
