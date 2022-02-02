@@ -33,7 +33,10 @@ export default function Header(props: Props) {
     onShowSettings,
   } = props;
   return (
-    <header className="px-4 mx-auto max-w-lg w-full pt-2 pb-4" id="header">
+    <header
+      className="px-4 mx-auto max-w-lg w-full pt-2 pb-4 bg-yellow-100"
+      id="header"
+    >
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

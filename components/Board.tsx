@@ -16,7 +16,7 @@ export default function Board(props: Props) {
 
   return (
     <div
-      className="grid grid-rows-6 gap-1.5 max-w-full"
+      className="grid grid-rows-6 gap-1.5 max-w-full bg-blue-100"
       style={{ aspectRatio: "1 / 1" }}
       id="katla"
     >
