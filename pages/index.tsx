@@ -108,7 +108,6 @@ export default function Home(props: Props) {
     }
 
     if (iframeLoaded.current) {
-      console.log("syncing state");
       iframeRef.current?.contentWindow.postMessage(
         {
           type: "sync-storage",

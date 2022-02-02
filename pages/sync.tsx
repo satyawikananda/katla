@@ -5,6 +5,9 @@ import {
   LAST_HASH_KEY,
 } from "../utils/constants";
 
+const VALID_EVENT_ORIGIN =
+  process.env.NODE_ENV === "production" ? "katla.vercel.app" : "localhost:3000";
+
 export default function SyncPage() {
   useEffect(() => {
     if (window.location === window.parent.location) {
@@ -13,8 +16,10 @@ export default function SyncPage() {
     }
 
     function handleMessage(event: MessageEvent) {
-      if (event.data.type === "sync-storage") {
-        console.log("sync-storage", event.data, event.origin);
+      if (
+        event.data.type === "sync-storage" &&
+        event.origin === VALID_EVENT_ORIGIN
+      ) {
         localStorage.setItem(
           GAME_STATE_KEY,
           JSON.stringify(event.data.gameState)
