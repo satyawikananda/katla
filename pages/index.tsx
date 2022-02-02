@@ -101,15 +101,13 @@ export default function Home(props: Props) {
 
   // sync storage
   const iframeRef = useRef<ComponentRef<"iframe">>(null);
+  const iframeLoaded = useRef(false);
   useEffect(() => {
     if (!game.ready) {
       return;
     }
 
-    const frameDoc =
-      iframeRef.current.contentDocument ||
-      iframeRef.current.contentWindow.document;
-    if (frameDoc.readyState === "complete") {
+    if (iframeLoaded.current) {
       console.log("syncing state");
       iframeRef.current?.contentWindow.postMessage(
         {
@@ -181,6 +179,7 @@ export default function Home(props: Props) {
         ref={iframeRef}
         className="hidden"
         src="https://katla-git-sync-state-pveyes.vercel.app/sync"
+        onLoad={() => (iframeLoaded.current = true)}
       />
     </Container>
   );

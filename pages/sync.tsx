@@ -14,9 +14,15 @@ export default function SyncPage() {
 
     function handleMessage(event: MessageEvent) {
       if (event.data.type === "sync-storage") {
-        console.log("sync-storage", event.data);
-        localStorage.setItem(GAME_STATE_KEY, event.data.gameState);
-        localStorage.setItem(GAME_STATS_KEY, event.data.gameStats);
+        console.log("sync-storage", event.data, event.origin);
+        localStorage.setItem(
+          GAME_STATE_KEY,
+          JSON.stringify(event.data.gameState)
+        );
+        localStorage.setItem(
+          GAME_STATS_KEY,
+          JSON.stringify(event.data.gameStats)
+        );
         localStorage.setItem(LAST_HASH_KEY, event.data.lastHash);
       }
     }
