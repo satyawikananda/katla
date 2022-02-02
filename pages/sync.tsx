@@ -12,11 +12,6 @@ export default function SyncPage() {
       return;
     }
 
-    if (window.parent.location.host !== "katla.vercel.app") {
-      // do not sync
-      return;
-    }
-
     function handleMessage(event: MessageEvent) {
       if (event.data.type === "sync-storage") {
         localStorage.setItem(GAME_STATE_KEY, event.data.gameState);

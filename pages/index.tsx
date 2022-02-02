@@ -1,4 +1,10 @@
-import React, { ComponentProps, useEffect, useState } from "react";
+import React, {
+  ComponentProps,
+  ComponentRef,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import createPersistedState from "use-persisted-state";
 import { GetStaticProps } from "next";
 
@@ -93,6 +99,30 @@ export default function Home(props: Props) {
     }
   }, []);
 
+  // sync storage
+  const iframeRef = useRef<ComponentRef<"iframe">>(null);
+  useEffect(() => {
+    if (!game.ready) {
+      return;
+    }
+
+    const frameDoc =
+      iframeRef.current.contentDocument ||
+      iframeRef.current.contentWindow.document;
+    if (frameDoc.readyState === "complete") {
+      console.log("syncing state");
+      iframeRef.current?.contentWindow.postMessage(
+        {
+          type: "sync-storage",
+          gameState: game.state,
+          gameStats: stats,
+          lastHash: game.hash,
+        },
+        "*"
+      );
+    }
+  }, [stats, game.state, game.hash, game.ready]);
+
   function showMessage(message: string, cb?: () => void) {
     setMessage(message);
     setTimeout(() => {
@@ -147,6 +177,7 @@ export default function Home(props: Props) {
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
       />
+      <iframe ref={iframeRef} className="hidden" src="https://katla.id/sync" />
     </Container>
   );
 }
